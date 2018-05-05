@@ -61,7 +61,7 @@ def pcl_callback(pcl_msg):
     # Choose a voxel (also known as leaf) size 
     # Note: this (1) is a poor choice of leaf size   
     # Experiment and find the appropriate size!
-    LEAF_SIZE = 0.005
+    LEAF_SIZE = 0.01
 
     # Set the voxel (or leaf) size  
     vox.set_leaf_size(LEAF_SIZE, LEAF_SIZE, LEAF_SIZE)
@@ -91,6 +91,7 @@ def pcl_callback(pcl_msg):
     axis_min = 0.6
     axis_max = 1.1
     passthrough.set_filter_limits(axis_min, axis_max)
+
 
     # Finally use the filter function to obtain the resultant point cloud. 
     point_cloud_filtered = passthrough.filter()
@@ -237,23 +238,15 @@ def pcl_callback(pcl_msg):
     print(type(labels))
     print(labels[0])
 
-
-    mtx = []
-    for i in range(len(centroids)):
-        row = []
-        for j in range(len(centroids[i])):
-	    row.append(np.asscalar(centroids[i][j])) 
-        mtx.append(row) 
-
     label_s = []
     for label in labels:
         label_s.append(str(label))
 		
- 		
+    lol = [a.tolist() for a in centroids] 		
      
-    dictionary = dict(zip(label_s, np.asarray(centroids, dtype=float)))
+    dictionary = dict(zip(label_s, lol))
 
-    with open('data.yml', 'w') as outfile:
+    with open('output_1.yaml', 'w') as outfile:
         yaml.dump(dictionary, outfile, default_flow_style=False)
     
     '''
