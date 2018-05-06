@@ -195,7 +195,7 @@ def pcl_callback(pcl_msg):
 
     for index, pts_list in enumerate(cluster_indices):
         # Grab the points for the cluster from the extracted outliers (cloud_objects)
-        pcl_cluster = cluster_cloud.extract(pts_list)
+        pcl_cluster = extracted_outliers.extract(pts_list)
 
         # TODO: convert the cluster from pcl to ROS using helper function
         ros_cluster_cloud = pcl_to_ros(pcl_cluster)
@@ -246,7 +246,7 @@ def pcl_callback(pcl_msg):
      
     dictionary = dict(zip(label_s, lol))
 
-    with open('output_1.yaml', 'w') as outfile:
+    with open('output_3.yaml', 'w') as outfile:
         yaml.dump(dictionary, outfile, default_flow_style=False)
     
     '''
